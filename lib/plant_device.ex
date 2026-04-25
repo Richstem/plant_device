@@ -32,11 +32,11 @@ defmodule PlantDevice do
   def get_temp_f do
     case get_temp() do
       temp_c when is_integer(temp_c) ->
-        (temp_c * 9/5 +32)
+        (temp_c * 9/5 + 32)
         |> Float.round(2)
         |> Float.to_string()
         |> Kernel.<>(" F")
-      {:error, _} = error -> error
+      {:error, _} = error -> error    #pass the error along if it errors out.
     end
   end
 end

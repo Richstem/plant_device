@@ -67,6 +67,8 @@ defmodule PlantDevice.MixProject do
       {:vintage_net, "~> 0.13"},
       {:vintage_net_ethernet, "~> 0.11"},
       {:vintage_net_wifi, "~> 0.12"},
+      {:phoenix_client, "~> 0.3"},
+      {:jason, "~> 1.0"}
     ]
   end
 
