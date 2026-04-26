@@ -38,9 +38,16 @@ defmodule PlantDevice.TempReporter  do
   def handle_info(:report, state) do
     #processing self-sent report, sending new temp
     current_temp = PlantDevice.get_temp_f()
-    Channel.push_async(state.channel, "report_temp", %{temp: current_temp})
+    current_soil_temp = PlantDevice.SoilStats.get_soil_temp_f()
+    current_moist = PlantDevice.SoilStats.get_moisture_reading()
 
-    #wait 5 seconds and send again
+    Channel.push_async(
+      state.channel,
+      "report_temp",
+      %{temp: current_temp,
+        soil_temp: current_soil_temp,
+        soil_moisture: current_moist})
+
     Process.send_after(self(), :report, 5000)
     {:noreply, state}
   end
