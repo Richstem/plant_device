@@ -69,7 +69,8 @@ defmodule PlantDevice.MixProject do
       {:vintage_net_wifi, "~> 0.12"},
       {:phoenix_client, "~> 0.3"},
       {:jason, "~> 1.0"},
-      {:circuits_i2c, "~> 2.0"}
+      {:circuits_i2c, "~> 2.0"},
+      {:circuits_gpio, "~> 2.1"}
     ]
   end
 
