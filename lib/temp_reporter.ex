@@ -51,4 +51,13 @@ defmodule PlantDevice.TempReporter  do
     Process.send_after(self(), :report, 5000)
     {:noreply, state}
   end
+
+  def handle_info(%PhoenixClient.Message{event: "pump_water", payload: %{"duration" => duration}}, state) do
+    IO.puts("Received command to pump #{duration} seconds. Pumping...")
+
+    PlantDevice.PumpWater.pump_seconds(18, duration)
+
+    {:noreply, state}
+  end
+
 end
