@@ -41,15 +41,15 @@ defmodule PlantDevice.TempReporter  do
     current_soil_temp = PlantDevice.SoilStats.get_soil_temp_f()
     current_moist = PlantDevice.SoilStats.get_moisture_reading()
 
-    Channel.push_async(
-      state.channel,
-      "report_temp",
-      %{temp: current_temp,
-        soil_temp: current_soil_temp,
-        soil_moisture: current_moist})
+      Channel.push_async(
+        state.channel,
+        "report_temp",
+        %{temp: current_temp,
+          soil_temp: current_soil_temp,
+          soil_moisture: current_moist})
 
-    Process.send_after(self(), :report, 5000)
-    {:noreply, state}
+      Process.send_after(self(), :report, 5000)
+      {:noreply, state}
   end
 
   def handle_info(%PhoenixClient.Message{event: "pump_water", payload: %{"duration" => duration}}, state) do
