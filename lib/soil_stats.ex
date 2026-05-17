@@ -8,9 +8,12 @@ defmodule PlantDevice.SoilStats do
     _ <- Process.sleep(2),
     {:ok, <<soil_temp::signed-big-size(32)>>} <- I2C.read(i2c, 0x36, 4) do
       tempf = Float.round((soil_temp / 65536 * (9/5) + 32), 1)
-      tempf
-      |> Float.to_string()
-      |> Kernel.<>(" F")
+
+      if tempf > 0 and tempf < 120 do
+         tempf
+      else
+        "Bad temp reading."
+      end
     else
       _error -> "Failed to get soil temp. Check wiring."
     end
@@ -29,8 +32,11 @@ defmodule PlantDevice.SoilStats do
 
     #convert binary response to moisture reading
     {:ok, <<moisture::unsigned-big-size(16)>>} <- I2C.read(i2c, 0x36, 2) do
-      moisture
-
+      if moisture > 5 and moisture < 2000 do
+        moisture
+      else
+        "Bad reading"
+      end
     else
       _error -> "Moisture sensor reading failed. Check wiring."
     end

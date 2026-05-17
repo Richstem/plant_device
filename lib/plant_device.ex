@@ -34,9 +34,8 @@ defmodule PlantDevice do
       temp_c when is_integer(temp_c) ->
         (temp_c * 9/5 + 32)
         |> Float.round(2)
-        |> Float.to_string()
-        |> Kernel.<>(" F")
-      {:error, _} = error -> error    #pass the error along if it errors out.
+
+      _error -> "Failed to get device temp."
     end
   end
 end
